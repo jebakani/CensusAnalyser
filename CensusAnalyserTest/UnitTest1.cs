@@ -9,6 +9,7 @@ namespace CensusAnalyserTest
         string stateCensusPath = @"C:\Users\HP1\source\repos\Lambda\CensusAnalyser\IndianStateCensusAnalyser\IndianStateCensusData.csv";
         string wrongPath = @"C:\Users\HP1\source\repos\Lambda\CensusAnalyser\IndianStateCensusAnalyser\IndianStateCensus.csv";
         string wrongFileType = @"C:\Users\HP1\source\repos\Lambda\CensusAnalyser\IndianStateCensusAnalyser\TextFile1.txt";
+        string invalidDelimeter = @"C:\Users\HP1\source\repos\Lambda\CensusAnalyser\IndianStateCensusAnalyser\WorngDelimeter.csv";
         IndianStateCensusAnalyser.CensusAdapterFactory  csv = null;
         CensusAdapter adapter;
         Dictionary<string, CensusDataDAO> totalRecord;
@@ -61,6 +62,21 @@ namespace CensusAnalyserTest
             catch (CensusAnalyserException ce)
             {
                 Assert.AreEqual("Invalid File Type", ce.Message);
+            }
+        }
+        //TC 1.4
+        //Given the file with in valid delimeter
+        [TestMethod]
+        public void GivenInvalidDelimeter()
+        {
+            try
+            {
+                var stateRecor = adapter.GetCensusData(invalidDelimeter, "State,Population,AreaInSqKm,DensityPerSqKm");
+
+            }
+            catch (CensusAnalyserException ce)
+            {
+                Assert.AreEqual("File contains invalid Delimiter", ce.Message);
             }
         }
     }
