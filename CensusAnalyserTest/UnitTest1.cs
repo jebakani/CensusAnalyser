@@ -7,6 +7,7 @@ namespace CensusAnalyserTest
     public class UnitTest1
     {
         string stateCensusPath = @"C:\Users\HP1\source\repos\Lambda\CensusAnalyser\IndianStateCensusAnalyser\IndianStateCensusData.csv";
+        string wrongPath = @"C:\Users\HP1\source\repos\Lambda\CensusAnalyser\IndianStateCensusAnalyser\IndianStateCensus.csv";
         IndianStateCensusAnalyser.CensusAdapterFactory  csv = null;
         CensusAdapter adapter;
         Dictionary<string, CensusDataDAO> totalRecord;
@@ -30,6 +31,21 @@ namespace CensusAnalyserTest
             int expected = 36;
             //assertion
             Assert.AreEqual(actual, expected);
+        }
+        //TC 1.2
+        //Given the incorrect path return file not exist
+        [TestMethod]
+        public void GivenIncorrectPath()
+        {
+            try
+            {
+                var stateRecor= adapter.GetCensusData(wrongPath, "State,Population,AreaInSqKm,DensityPerSqKm");
+
+            } 
+            catch(CensusAnalyserException ce)
+            {
+                Assert.AreEqual("File Not Found", ce.Message);
+            }
         }
     }
 }
