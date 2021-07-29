@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace IndianStateCensusAnalyser
 {
-    class CensusAdapter
+   public class CensusAdapter
     {
-        public string[] GerCensusData(string csvFilePath,string dataHeader)
+        public string[] GetCensusData(string csvFilePath,string dataHeader)
         {
             string[] censusData;
-            if(File.Exists(csvFilePath))
+            if(!File.Exists(csvFilePath))
             {
                 throw new CensusAnalyserException("File Not Found", CensusAnalyserException.ExceptionType.FILE_NOT_FOUND);
             }

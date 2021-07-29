@@ -13,7 +13,7 @@ namespace IndianStateCensusAnalyser
         public Dictionary<string,CensusData> LoadCensusData(string csvFilePath,string dataHeader)
         {
             dataMap = new Dictionary<string, CensusData>();
-            censusData = GerCensusData(csvFilePath, dataHeader);
+            censusData = GetCensusData(csvFilePath, dataHeader);
             foreach (string data in censusData.Skip(1))
             {
                 if (!data.Contains(","))

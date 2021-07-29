@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace IndianStateCensusAnalyser
 {
     //class census data to get all posiible data
-    class CensusData
+     class CensusData
     {
-        public int SrNo;
+        public string SrNo;
         public string State;
-        public int TIN;
+        public string TIN;
         public string StateCode;
         public string Population;
         public string AreaInSqKm;

@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace IndianStateCensusAnalyser
 {
-    class CensusAdapterFactory
+    public class CensusAdapterFactory:CensusAdapter
     {
-        public Dictionary<string,CensusData> LoadCsvData(CensusAnalyser.Country country,string csvFilePath,string dataHeader)
-        {
-            switch(country)
+         public void LoadCsvData(CensusAnalyser.Country country, string csvFilePath, string dataHeader)
+         { 
+            switch (country)
             {
                 case (CensusAnalyser.Country.INDIA):
-                    return new IndianCensusAdapter().
+                    new IndianCensusAdapter().LoadCensusData(csvFilePath, dataHeader);
+                    break;
+                default:
+                    throw new CensusAnalyserException("No such country", CensusAnalyserException.ExceptionType.NO_SUCH_COUNTRY);
             }
         }
     }

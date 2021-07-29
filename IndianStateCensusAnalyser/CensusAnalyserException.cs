@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IndianStateCensusAnalyser
 {
-    class CensusAnalyserException:Exception
+    public class CensusAnalyserException:Exception
     {
         public ExceptionType exception;
         public enum ExceptionType
