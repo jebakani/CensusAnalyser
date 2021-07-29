@@ -8,6 +8,7 @@ namespace CensusAnalyserTest
     {
         string stateCensusPath = @"C:\Users\HP1\source\repos\Lambda\CensusAnalyser\IndianStateCensusAnalyser\IndianStateCensusData.csv";
         string wrongPath = @"C:\Users\HP1\source\repos\Lambda\CensusAnalyser\IndianStateCensusAnalyser\IndianStateCensus.csv";
+        string wrongFileType = @"C:\Users\HP1\source\repos\Lambda\CensusAnalyser\IndianStateCensusAnalyser\TextFile1.txt";
         IndianStateCensusAnalyser.CensusAdapterFactory  csv = null;
         CensusAdapter adapter;
         Dictionary<string, CensusDataDAO> totalRecord;
@@ -45,6 +46,21 @@ namespace CensusAnalyserTest
             catch(CensusAnalyserException ce)
             {
                 Assert.AreEqual("File Not Found", ce.Message);
+            }
+        }
+        //TC 1.3
+        //Given the invalid file it returns invalid file type exception
+        [TestMethod]
+        public void GivenInvalidFile()
+        {
+            try
+            {
+                var stateRecor = adapter.GetCensusData(wrongFileType, "State,Population,AreaInSqKm,DensityPerSqKm");
+
+            }
+            catch (CensusAnalyserException ce)
+            {
+                Assert.AreEqual("Invalid File Type", ce.Message);
             }
         }
     }
