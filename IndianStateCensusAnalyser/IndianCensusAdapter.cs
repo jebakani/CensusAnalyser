@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IndianStateCensusAnalyserData;
 
 namespace IndianStateCensusAnalyser
 {
-    class IndianCensusAdapter:CensusAdapter
+    public class IndianCensusAdapter:CensusAdapter
     {
         string[] censusData;
         Dictionary<string, CensusData> dataMap;

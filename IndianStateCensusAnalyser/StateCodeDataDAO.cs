@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IndianStateCensusAnalyser
+namespace IndianStateCensusAnalyserData
 {
-    class StateCodeDataDAO
+    public class StateCodeDataDAO
     {
         //class takes the object for the  State Code census data
         public string SrNo;

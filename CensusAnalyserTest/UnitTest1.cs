@@ -14,15 +14,16 @@ namespace CensusAnalyserTest
         string stateCodeInvalidDelimeter= @"C:\Users\HP1\source\repos\Lambda\CensusAnalyser\IndianStateCensusAnalyser\StateCodeWrongDelimeter.csv";
         IndianStateCensusAnalyser.CensusAdapterFactory  csv = null;
         CensusAdapter adapter;
-        Dictionary<string, CensusDataDAO> totalRecord;
-        string[] stateRecord;
+        Dictionary<string, CensusData> totalRecord;
+        Dictionary<string, CensusData> stateRecord;
 
         [TestInitialize]
         public void testSetup()
         {
             csv = new CensusAdapterFactory();
             adapter = new CensusAdapter();
-            totalRecord = new Dictionary<string, CensusDataDAO>();
+            totalRecord = new Dictionary<string, CensusData>();
+            stateRecord = new Dictionary<string, CensusData>();
         }
 
         //TC.1
@@ -31,8 +32,8 @@ namespace CensusAnalyserTest
         [TestMethod]
         public void GivenStateCensusReturnTotalRecord()
         {
-            stateRecord = adapter.GetCensusData(stateCensusPath,"State,Population,AreaInSqKm,DensityPerSqKm");
-            int actual= stateRecord.Length-1;
+            stateRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA ,stateCensusPath,"State,Population,AreaInSqKm,DensityPerSqKm");
+            int actual= stateRecord.Count;
             int expected = 36;
             //assertion
             Assert.AreEqual(actual, expected);
@@ -45,7 +46,7 @@ namespace CensusAnalyserTest
         {
             try
             {
-                var stateRecor= adapter.GetCensusData(wrongPath, "State,Population,AreaInSqKm,DensityPerSqKm");
+                stateRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA ,wrongPath,"State,Population,AreaInSqKm,DensityPerSqKm");
 
             } 
             catch(CensusAnalyserException ce)
@@ -61,7 +62,7 @@ namespace CensusAnalyserTest
         {
             try
             {
-                var stateRecor = adapter.GetCensusData(wrongFileType, "State,Population,AreaInSqKm,DensityPerSqKm");
+                stateRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA , wrongFileType, "State,Population,AreaInSqKm,DensityPerSqKm");
 
             }
             catch (CensusAnalyserException ce)
@@ -77,7 +78,7 @@ namespace CensusAnalyserTest
         {
             try
             {
-                var stateRecor = adapter.GetCensusData(invalidDelimeter, "State,Population,AreaInSqKm,DensityPerSqKm");
+                stateRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA , invalidDelimeter, "State,Population,AreaInSqKm,DensityPerSqKm");
 
             }
             catch (CensusAnalyserException ce)
@@ -93,7 +94,7 @@ namespace CensusAnalyserTest
         {
             try
             {
-                var stateRecor = adapter.GetCensusData(invalidDelimeter, "State,Population,Area,DensityPerSqKm");
+                stateRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA , invalidDelimeter, "Population,AreaInSqKm,DensityPerSqKm");
 
             }
             catch (CensusAnalyserException ce)
@@ -107,8 +108,8 @@ namespace CensusAnalyserTest
         [TestMethod]
         public void GivenStateCensusReturnTotalRecordForStateCode()
         {
-            stateRecord = adapter.GetCensusData(stateCodePath, "SrNo,State,TIN,StateCode");
-            int actual = stateRecord.Length - 1;
+            stateRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA, stateCodePath, "SrNo,State,TIN,StateCode");
+            int actual = stateRecord.Count;
             int expected = 37;
             //assertion
             Assert.AreEqual(actual, expected);
@@ -121,7 +122,7 @@ namespace CensusAnalyserTest
         {
             try
             {
-                var stateRecor = adapter.GetCensusData(wrongPath, "SrNo,State,TIN,StateCode");
+                stateRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA, wrongPath, " SrNo, State, TIN, StateCode");
 
             }
             catch (CensusAnalyserException ce)
@@ -137,7 +138,7 @@ namespace CensusAnalyserTest
         {
             try
             {
-                var stateRecor = adapter.GetCensusData(wrongFileType, "SrNo,State,TIN,StateCode");
+                stateRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA, wrongFileType, " SrNo, State, TIN, StateCode");
 
             }
             catch (CensusAnalyserException ce)
@@ -153,7 +154,7 @@ namespace CensusAnalyserTest
         {
             try
             {
-                var stateRecor = adapter.GetCensusData(stateCodeInvalidDelimeter, "SrNo,State,TIN,StateCode");
+                stateRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA, stateCodeInvalidDelimeter, "SrNo,State,TIN,StateCode");
 
             }
             catch (CensusAnalyserException ce)
@@ -169,13 +170,24 @@ namespace CensusAnalyserTest
         {
             try
             {
-                var stateRecor = adapter.GetCensusData(stateCodePath, "State,Population,Area,DensityPerSqKm");
+                stateRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA, stateCodePath, "State,Population,Area,DensityPerSqKm");
 
             }
             catch (CensusAnalyserException ce)
             {
                 Assert.AreEqual("Data header in not matched", ce.Message);
             }
+        }
+
+        [TestCategory("StateCensusAnalyser")]
+        [TestMethod]
+        public void SampleTest()
+        {
+            totalRecord = csv.LoadCsvData(CensusAnalyser.Country.INDIA, stateCensusPath, "State,Population,AreaInSqKm,DensityPerSqKm");
+            int actual = totalRecord.Count;
+            int expected = 36;
+            //assertion
+            Assert.AreEqual(actual, expected);
         }
     }
 }

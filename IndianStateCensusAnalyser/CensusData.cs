@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IndianStateCensusAnalyserData;
 
 namespace IndianStateCensusAnalyser
 {
     //class census data to get all posiible data
-     class CensusData
+     public class CensusData
     {
         public string SrNo;
         public string State;
