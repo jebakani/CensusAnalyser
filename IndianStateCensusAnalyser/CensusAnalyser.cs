@@ -8,6 +8,7 @@ namespace IndianStateCensusAnalyser
 {
    public class CensusAnalyser
     {
+        //enum to store list country
         public enum Country
         {
             INDIA

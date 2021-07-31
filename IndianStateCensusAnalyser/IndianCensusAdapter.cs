@@ -14,18 +14,23 @@ namespace IndianStateCensusAnalyser
         public Dictionary<string,CensusData> LoadCensusData(string csvFilePath,string dataHeader)
         {
             dataMap = new Dictionary<string, CensusData>();
+            //reading the data from csv file and store it in censusData variable
             censusData = GetCensusData(csvFilePath, dataHeader);
+            //iterate for each record
             foreach (string data in censusData.Skip(1))
             {
+                //checking for delimiter
                 if (!data.Contains(","))
                     throw new CensusAnalyserException("File contains invalid Delimiter", CensusAnalyserException.ExceptionType.INCORRECT_DELIMITER);
+                //sliting the data based on delimiters                 
                 string[] column = data.Split(",");
+                //storing result based on file type in dictionary
                 if (csvFilePath.Contains("IndianStateCensusData.csv"))
                     dataMap.Add(column[0], new CensusData(new CensusDataDAO(column[0], column[1], column[2], column[3])));
                 if (csvFilePath.Contains("IndianStateCode.csv"))
                     dataMap.Add(column[1], new CensusData(new StateCodeDataDAO(column[0], column[1], column[2], column[3])));
             }
-
+            //return the dictionary
             return dataMap;
         }
     }
